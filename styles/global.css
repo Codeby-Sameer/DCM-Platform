@@ -1,5 +1,5 @@
-@import "tailwindcss";
-@import "tw-animate-css";
+@import 'tailwindcss';
+@import 'tw-animate-css';
 
 @custom-variant dark (&:is(.dark *));
 
@@ -37,17 +37,14 @@
   --sidebar-accent-foreground: oklch(0.205 0 0);
   --sidebar-border: oklch(0.922 0 0);
   --sidebar-ring: oklch(0.708 0 0);
-  /* Default brand = purple */
-  --brand: oklch(0.61 0.24 300); /* purple */
-  --brand-2: color-mix(in oklab, var(--brand) 85%, white 15%);
 }
 
 .dark {
   --background: oklch(0.145 0 0);
   --foreground: oklch(0.985 0 0);
-  --card: oklch(0.2 0 0);
+  --card: oklch(0.145 0 0);
   --card-foreground: oklch(0.985 0 0);
-  --popover: oklch(0.2 0 0);
+  --popover: oklch(0.145 0 0);
   --popover-foreground: oklch(0.985 0 0);
   --primary: oklch(0.985 0 0);
   --primary-foreground: oklch(0.205 0 0);
@@ -59,7 +56,7 @@
   --accent-foreground: oklch(0.985 0 0);
   --destructive: oklch(0.396 0.141 25.723);
   --destructive-foreground: oklch(0.637 0.237 25.331);
-  --border: oklch(0.28 0 0);
+  --border: oklch(0.269 0 0);
   --input: oklch(0.269 0 0);
   --ring: oklch(0.439 0 0);
   --chart-1: oklch(0.488 0.243 264.376);
@@ -75,24 +72,6 @@
   --sidebar-accent-foreground: oklch(0.985 0 0);
   --sidebar-border: oklch(0.269 0 0);
   --sidebar-ring: oklch(0.439 0 0);
-  --brand-2: color-mix(in oklab, var(--brand) 80%, black 20%);
-}
-
-/* Brand presets – switch via document.documentElement.dataset.brand */
-[data-brand="purple"] {
-  --brand: oklch(0.61 0.24 300);
-}
-[data-brand="blue"] {
-  --brand: oklch(0.65 0.17 240);
-}
-[data-brand="teal"] {
-  --brand: oklch(0.7 0.12 180);
-}
-[data-brand="orange"] {
-  --brand: oklch(0.73 0.19 60);
-}
-[data-brand="pink"] {
-  --brand: oklch(0.71 0.28 360);
 }
 
 @theme inline {
@@ -140,117 +119,8 @@
   * {
     @apply border-border outline-ring/50;
   }
+
   body {
     @apply bg-background text-foreground;
-  }
-}
-
-@layer utilities {
-  .bg-brand {
-    background-color: var(--brand);
-  }
-  .text-brand {
-    color: var(--brand);
-  }
-  .border-brand {
-    border-color: var(--brand);
-  }
-  .fill-brand {
-    fill: var(--brand);
-  }
-  .bg-sidebar-gradient {
-    background: linear-gradient(to bottom, var(--brand), var(--brand-2));
-  }
-  /* In dark mode, ensure any accidental bg-white becomes a themed card surface */
-  .dark .bg-white {
-    background-color: var(--card);
-  }
-
-  /* Optional helpers for consistent surfaces */
-  .surface {
-    background-color: var(--card);
-  }
-  .surface-muted {
-    background-color: var(--muted);
-  }
-
-  /* Add a reusable, theme-aware native range style.
-     - Uses --brand for the filled portion and thumb ring
-     - Works in light/dark, cross-browser
-     - Pair with an inline background gradient for dynamic fill (already used) */
-  .themed-range {
-    -webkit-appearance: none;
-    appearance: none;
-    width: 100%;
-    height: 10px;
-    border-radius: 9999px;
-    background: var(--muted); /* fallback; dynamic fill supplied inline */
-    accent-color: var(--brand);
-    outline: none;
-  }
-  .themed-range:focus-visible {
-    box-shadow: 0 0 0 3px color-mix(in oklab, var(--brand) 25%, transparent);
-  }
-  .themed-range::-webkit-slider-runnable-track {
-    height: 10px;
-    background: transparent;
-    border-radius: 9999px;
-  }
-  .themed-range::-webkit-slider-thumb {
-    -webkit-appearance: none;
-    appearance: none;
-    width: 18px;
-    height: 18px;
-    margin-top: -4px;
-    border-radius: 9999px;
-    background: var(--background);
-    border: 2px solid var(--brand);
-    box-shadow: 0 0 0 3px color-mix(in oklab, var(--brand) 15%, transparent);
-  }
-  .themed-range:active::-webkit-slider-thumb {
-    box-shadow: 0 0 0 5px color-mix(in oklab, var(--brand) 25%, transparent);
-  }
-  .themed-range::-moz-range-track {
-    height: 10px;
-    background: var(--muted);
-    border: none;
-    border-radius: 9999px;
-  }
-  .themed-range::-moz-range-progress {
-    height: 10px;
-    background: var(--brand);
-    border-radius: 9999px;
-  }
-  .themed-range::-moz-range-thumb {
-    width: 18px;
-    height: 18px;
-    border-radius: 9999px;
-    background: var(--background);
-    border: 2px solid var(--brand);
-    box-shadow: 0 0 0 3px color-mix(in oklab, var(--brand) 15%, transparent);
-  }
-
-  /* Default Recharts theming (axes/grid/labels) using tokens */
-  .recharts-surface text {
-    fill: var(--muted-foreground);
-  }
-  .recharts-cartesian-grid line {
-    stroke: var(--border);
-  }
-  .recharts-legend-wrapper,
-  .recharts-default-legend .recharts-legend-item-text {
-    color: var(--muted-foreground);
-    fill: var(--muted-foreground);
-  }
-  .recharts-tooltip-wrapper .recharts-default-tooltip {
-    background-color: var(--card) !important;
-    border-color: var(--border) !important;
-    color: var(--foreground) !important;
-  }
-
-  /* Soften RadialBar background track from Recharts to theme-muted (prevents near-black in dark mode) */
-  .recharts-radial-bar-background-sector,
-  .recharts-radial-bar-background-sector path {
-    fill: var(--muted) !important;
   }
 }
